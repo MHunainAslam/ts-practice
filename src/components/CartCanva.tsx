@@ -9,7 +9,6 @@ const CartCanva = (props: Props) => {
     cart,
     finalTotal,
     handleUpdateQuantity,
-    handleAddToCart,
     checkItemInCart,
   } = useAppContext();
   return (

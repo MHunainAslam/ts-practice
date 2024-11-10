@@ -12,7 +12,6 @@ interface AppContextType {
   cartLength: number;
   setcartLength: React.Dispatch<React.SetStateAction<number>>;
   cart: products[];
-  handleAddToCart: (item: products) => void;
   handleUpdateQuantity: (
     item: products,
     action: "increase" | "decrease"
@@ -43,22 +42,7 @@ export const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
     return cart.find((item) => item.name === name);
   };
 
-  // Add to cart functionality
-  const handleAddToCart = (item: products) => {
-    const updatedCart = [...cart]; // Create a new array to avoid direct mutation
-
-    const existingItem = updatedCart.find((i) => i.name === item.name);
-    if (existingItem) {
-      existingItem.quantity += 1; // Update quantity if item already in the cart
-    } else {
-      item.quantity = 1; // Set initial quantity to 1
-      updatedCart.push(item); // Add new item to cart
-    }
-
-    setCart(updatedCart); // Update the cart state
-    setcartLength(updatedCart?.length);
-    localStorage.setItem("cart", JSON.stringify(updatedCart)); // Sync cart with localStorage
-  };
+  
 
   // Update the quantity of an item in the cart
   const handleUpdateQuantity = (
@@ -81,6 +65,11 @@ export const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
         const index = updatedCart.findIndex((i) => i.name === item.name);
         updatedCart.splice(index, 1); // Remove item from cart
       }
+    } else {
+      updatedCart.push(item);
+      item.quantity = 1;
+      setCart(updatedCart); // Update the cart state
+      setcartLength(updatedCart?.length);
     }
 
     setCart(updatedCart); // Update the cart state
@@ -98,7 +87,6 @@ export const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
         cartLength,
         setcartLength,
         handleUpdateQuantity,
-        handleAddToCart,
         checkItemInCart,
         cart,
         finalTotal,

@@ -8,7 +8,7 @@ interface ProductcardProps {
 }
 
 const Productcard: React.FC<ProductcardProps> = ({ product }) => {
-  const { handleUpdateQuantity, handleAddToCart, checkItemInCart, cart } =
+  const { handleUpdateQuantity, checkItemInCart, cart } =
     useAppContext();
 
   return (
@@ -37,7 +37,7 @@ const Productcard: React.FC<ProductcardProps> = ({ product }) => {
                 {!itemInCart ? (
                   <button
                     className="btn btn-primary"
-                    onClick={() => handleAddToCart(item)}
+                    onClick={() => handleUpdateQuantity(item, "increase")}
                   >
                     Add to Cart
                   </button>
